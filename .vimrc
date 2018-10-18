@@ -21,6 +21,12 @@ Plugin 'SirVer/ultisnips'
 Plugin 'gregsexton/gitv'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'honza/vim-snippets'
+Plugin 'majutsushi/tagbar'
+Plugin 'w0rp/ale'
+Plugin 'tpope/vim-eunuch'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'junegunn/fzf.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -104,3 +110,14 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+"Nerdtree Settings
+let NERDTreeShowHidden=1
+
+"UtilSnips
+let g:UltiSnipsExpandTriggers="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+"Tagbar
+nmap <F8> :TagbarToggle<CR>
