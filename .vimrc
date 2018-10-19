@@ -23,16 +23,24 @@ Plugin 'Shougo/deoplete.nvim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
+Plugin 'xolox/vim-misc'
 Plugin 'w0rp/ale'
+Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'junegunn/fzf.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
-
-"----BASIC MAPINGS
 filetype plugin on
+
+
+autocmd FileType python  nnoremap <buffer> <F9>:exec '!python' shellescape(@%, 1)<CR>
+
+let python_highlight_all = 1
+
+"----BASICn MAPINGS
 set number
 set encoding=utf-8
 set relativenumber
@@ -52,9 +60,12 @@ set wildmenu
 set wildmode=longest,list,full
 
 "---KEY REMAPS------
-map <C-n> :NERDTreeToggle<CR>
-map <C-g> :GitGutterToggle<CR>
-map <C-m> :TagbarToggle<CR>
+nmap <F2> :NERDTreeToggle<CR>
+nmap <F3> :GitGutterToggle<CR>
+map <F4> :TagbarToggle<CR>
+
+" Easy Tags
+"let g:easytags cmd = 'usr/local/bin/'
 
 "---NAV KEY BINDS----
 map <C-h> <C-w>h
@@ -65,10 +76,6 @@ map <C-l> <C-w>l
 "----REMAP VIM SPLITs
 set splitbelow
 set splitright
-
-"NeoComplete Key remaps
-inoremap  <expr> <C-u>      neocomplete#undo_completion()
-inoremap  <expr> <C-l>      neocomplete#complete_common_string()
 
 "-----Python env---
 let g:pymode_python = 'python3' 
@@ -84,6 +91,15 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 
 "Deocomplete---Enable at startup
 let g:deocomplete#enable_at_startup = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 "-----DEF DICT.
 let g:necomplete#sources#dictionary#dictionaries ={
@@ -118,6 +134,3 @@ let NERDTreeShowHidden=1
 let g:UltiSnipsExpandTriggers="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-"Tagbar
-nmap <F8> :TagbarToggle<CR>
