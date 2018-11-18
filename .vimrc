@@ -12,13 +12,12 @@ Plugin 'VundleVim/Vundle.vim'
 
 "Plugins to install:
 Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'  
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'SirVer/ultisnips'
-Plugin 'gregsexton/gitv'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'honza/vim-snippets'
@@ -27,58 +26,59 @@ Plugin 'xolox/vim-misc'
 Plugin 'w0rp/ale'
 Plugin 'mattn/emmet-vim'
 Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'junegunn/fzf.vim'
+Plugin 'tpope/vim-fugitive'                 "Plugin for git
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'farseer90718/vim-taskwarrior'       "Plugin to allow for taskwarrior editing in Vim
 
 call vundle#end()            " required
+
 filetype plugin indent on    " required
 filetype plugin on
 
-
-autocmd FileType python  nnoremap <buffer> <F9>:exec '!python' shellescape(@%, 1)<CR>
-
 let python_highlight_all = 1
 
-"----BASICn MAPINGS
-set number
-set encoding=utf-8
-set relativenumber
+let g:systastic_java_checkers=[]
+
+"Basic VIM Settings
 syntax on
+set number
+set relativenumber
+set encoding=utf-8
 set ruler
 set cursorline
 set background=dark
-
-"----Tabbing--------
+set so=999
 set tabstop=4
 set shiftwidth=4
 set smarttab
 set expandtab
 
+" Toggle --------------------------------
+nmap <F2> :NERDTreeToggle<CR>
+nmap <F3> :GitGutterToggle<CR>
+nmap <F4> :TagbarToggle<CR>
+nmap <F5> :ToggleWhitespace<CR>
+nmap <F6> :StripWhitespace<CR>
+nmap <F7> :IndentGuidesToggle<CR>
+
+let NERDTreeDirArrows=1
+
 "---AUTOCOMPLETE---
 set wildmenu
 set wildmode=longest,list,full
 
-"---KEY REMAPS------
-nmap <F2> :NERDTreeToggle<CR>
-nmap <F3> :GitGutterToggle<CR>
-map <F4> :TagbarToggle<CR>
+"DevIcons glyph padding
+let g:WebDevIconsNerdTreeAfterGlypghPadding=' '
 
-" Easy Tags
-"let g:easytags cmd = 'usr/local/bin/'
-
-"---NAV KEY BINDS----
+"NAV KEY BINDS----
 map <C-h> <C-w>h
 map <C-j> <C-W>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-"----REMAP VIM SPLITs
+"REMAP VIM SPLITs
 set splitbelow
 set splitright
-
-"-----Python env---
-let g:pymode_python = 'python3' 
 
 " Airliner Changes
 let g:airline#extensions#tabline#enabled = 1
@@ -88,9 +88,6 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:neocompelte#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-"Deocomplete---Enable at startup
-let g:deocomplete#enable_at_startup = 1
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -112,7 +109,10 @@ let g:necomplete#sources#dictionary#dictionaries ={
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
 endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*' 
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+
+
 
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -123,14 +123,17 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Deleted"   : "✖",
     \ "Dirty"     : "✗",
     \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
-    \ }
+    \}
 
-"Nerdtree Settings
-let NERDTreeShowHidden=1
-
-"UtilSnips
+"UtilSnipD
 let g:UltiSnipsExpandTriggers="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" CSV (AUTO OPENS AS TABLE)-----------------------------------------------------------------------
+aug CSV_Editing
+    au!
+    au BufRead,BufWritePost *.csv :%ArrangeColumn
+    au BufWritePre *.csv :%UnArrangeColumn
+aug end
