@@ -10,6 +10,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+
 "Plugins to install:
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -17,18 +18,14 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'vim-airline/vim-airline'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'SirVer/ultisnips'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'honza/vim-snippets'
+Plugin 'valloric/youcompleteme'
 Plugin 'majutsushi/tagbar'
-Plugin 'xolox/vim-misc'
-Plugin 'w0rp/ale'
 Plugin 'mattn/emmet-vim'
-Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'                 "Plugin for git
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'farseer90718/vim-taskwarrior'       "Plugin to allow for taskwarrior editing in Vim
+Plugin 'vim-syntastic/syntastic'
+Plugin 'fatih/vim-go'
 
 call vundle#end()            " required
 
@@ -36,8 +33,6 @@ filetype plugin indent on    " required
 filetype plugin on
 
 let python_highlight_all = 1
-
-let g:systastic_java_checkers=[]
 
 "Basic VIM Settings
 syntax on
@@ -63,11 +58,11 @@ nmap <F7> :IndentGuidesToggle<CR>
 
 let NERDTreeDirArrows=1
 
-"---AUTOCOMPLETE---
+" AUTOCOMPLETE---
 set wildmenu
 set wildmode=longest,list,full
 
-"DevIcons glyph padding
+" DevIcons glyph padding
 let g:WebDevIconsNerdTreeAfterGlypghPadding=' '
 
 "NAV KEY BINDS----
@@ -76,19 +71,9 @@ map <C-j> <C-W>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-"REMAP VIM SPLITs
-set splitbelow
-set splitright
+let g:ycm_use_clangd = 0
 
-" Airliner Changes
-let g:airline#extensions#tabline#enabled = 1
-
-"-----NEOCOMPLETE---
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocompelte#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-
+" Syntastic Settings----------------------------------------------------------
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -98,23 +83,14 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-"-----DEF DICT.
-let g:necomplete#sources#dictionary#dictionaries ={
-    \ 'default'  : ' ',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme'   : $HOME.'/.gosh_completions'
-    \}
+"REMAP VIM SPLITs
+set splitbelow
+set splitright
 
-" Def Keyword
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" Airliner Changes
+let g:airline#extensions#tabline#enabled = 1
 
-
-
-
-let g:NERDTreeIndicatorMapCustom = {
+"let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
@@ -125,15 +101,3 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"
     \}
-
-"UtilSnipD
-let g:UltiSnipsExpandTriggers="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" CSV (AUTO OPENS AS TABLE)-----------------------------------------------------------------------
-aug CSV_Editing
-    au!
-    au BufRead,BufWritePost *.csv :%ArrangeColumn
-    au BufWritePre *.csv :%UnArrangeColumn
-aug end
